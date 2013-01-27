@@ -6,4 +6,4 @@ Fuzzy matching of strings based on common letter pairs in words. This is a javas
 
 License: MIT
 
-Author: [Paul Harper](mailto:benekastah@gmail.com)
+Author: Paul Harper
