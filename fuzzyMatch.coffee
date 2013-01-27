@@ -1,17 +1,6 @@
-###
 
-This is a javascript implementation of the string similarity algorithm found
-[here](http://www.catalysoft.com/articles/StrikeAMatch.html).
-
-Perhaps we can call it the Letter Pairs Algorithm.
-
-License: MIT
-
-Author: Paul Harper <benekastah@gmail.com>
-
-###
-
-isClonedInstance = { is_cloned_instance: true }
+# Magic cookie
+isClonedInstance = {}
 
 class PairedString
   constructor: (str) ->
@@ -60,25 +49,21 @@ class PairedString
   
   isCloned: -> @isClonedInstance == isClonedInstance
   toString: -> @input
-  
+
+
 class FuzzyMatch
-  constructor: (search, comparisons) ->
+  constructor: (search, comparisons...) ->
     @search = new PairedString search
-    
-    if comparisons not instanceof Array
-      c = []
-      c.push.apply c, arguments
-      c.shift()
-    else
-      c = comparisons
-    
-    @comparisons = (new PairedString item for item in c)
+    @comparisons = (new PairedString item for item in comparisons)
     
   rank: ->
-    ret = []
-    ret.push(score: @search.compare(item), item: item, string: item.toString()) for item in @comparisons
+    ret = for item in @comparisons
+      score: @search.compare(item)
+      item: item
+      string: item.toString()
     ret.search = @search
     ret.sort (a, b) -> b.score - a.score
+
 
 try
   module.exports = FuzzyMatch
